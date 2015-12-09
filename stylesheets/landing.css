@@ -43,7 +43,9 @@ MAIN CONTENT
 .thumbnail_image{
   max-height:200px;
   max-width:242px;
-  border: 4px solid #1F3352;
+  border: 4px solid #565657;
+  margin-bottom:10px;
+  margin-top:10px;
 
 }
 
@@ -98,21 +100,27 @@ footer{
 .jumbotron{
   background: url('http://i1376.photobucket.com/albums/ah5/svillasenor/cropped_header_1446788000537_zpsagknujzb.jpg') no-repeat center;
   background-size: cover;
+  border-bottom:5px solid #19BEDE;
 }
 
 .portrait_name{
     background: rgba(230, 230, 230, 0.7);
 }
 body{
-    background:#DDDDDD;
+    background:#0A0A0A;
 }
 .thumbnail{
-    border: 4px solid #1F3352;
-    background-color:#D9CB9E;
+    border: 4px solid #0F93F5;
+    background-color:#262829;
+    padding:0px;
+    color:#DDDDDD;
 }
 h3{
-    color:#DC3610;
+    color:#19BEDE;
 }
 .caption{
-    background:;
+border-top:5px solid #0F93F5;
+background-color:#565657;
+}
+p{
 }
