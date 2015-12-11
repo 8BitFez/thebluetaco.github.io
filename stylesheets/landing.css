@@ -38,6 +38,7 @@ MAIN CONTENT
 .thumbnail_space{
     max-width:90%;
     margin:0 auto;
+    margin-top:-px;
 }
 
 .thumbnail_image{
@@ -91,6 +92,8 @@ Color 1:
 
 article{
     background:#eee;
+    margin-top:5px;
+    z-index:1000;
 }
 
 footer{
@@ -107,7 +110,7 @@ footer{
     background: rgba(230, 230, 230, 0.7);
 }
 body{
-    background:#061322;
+    background:#060e1b;
 }
 .thumbnail{
     border: 4px solid #0F93F5;
@@ -126,4 +129,7 @@ h3{
 }
 .disc{
     color:#DDDDDD;
+}
+#canvas{
+    position:absolute;
 }
