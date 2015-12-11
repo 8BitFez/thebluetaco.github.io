@@ -92,8 +92,6 @@ Color 1:
 
 article{
     background:#eee;
-    margin-top:5px;
-    z-index:1000;
 }
 
 footer{
@@ -110,7 +108,7 @@ footer{
     background: rgba(230, 230, 230, 0.7);
 }
 body{
-    background:#060e1b;
+    background:#DDDDDD;
 }
 .thumbnail{
     border: 4px solid #0F93F5;
