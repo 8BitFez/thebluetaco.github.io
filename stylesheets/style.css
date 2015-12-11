@@ -1,0 +1,12 @@
+body{
+  margin:0;
+  padding:0;
+  background-color:#061322;
+}
+
+.ba{
+  position:relative;
+  width:600px;
+  height:400px;
+  margin:0 auto;
+}
