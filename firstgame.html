@@ -1,0 +1,151 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>prototype</title>
+    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(1280, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+
+function preload() {
+ game.load.image('ship1','assets/playerShip2_red.png');
+ game.load.image('enemy1', 'assets/ufoBlue.png');
+ game.load.image('lazer_ship1','assets/Lasers/laserBlue06.png');
+}
+
+var ship;
+var enemys = [];
+var bullets = [];
+var i = 0;
+function fireingMylazers(sprite,fireRate){
+    if (i == 0){
+        var bullet = game.add.sprite(ship.x,ship.y, sprite);
+        game.physics.enable( bullet, Phaser.Physics.ARCADE);
+        game.physics.arcade.velocityFromAngle(ship.angle, 600, bullet.body.velocity);
+        bullet.body.rotation = (ship.body.rotation);
+        i = fireRate;
+    }else{
+        i--;
+    }
+    
+}
+
+function newEnemy(sprite){
+    var enemy;
+    
+    enemy = (game.add.sprite(-30, -30, sprite));
+    game.physics.enable( enemy, Phaser.Physics.ARCADE)
+    
+    if((Math.floor((Math.random() * 10) + 1) > 5)){
+        enemy.x = Math.floor((Math.random() * 1000) + 1);
+        enemy.body.velocity.y = Math.floor((Math.random() * 1000) + 1);
+    }
+    else {
+        enemy.y = Math.floor((Math.random() * 1000) + 3);
+        enemy.body.velocity.x = Math.floor((Math.random() * 1000) + 1);   
+    }
+    enemys.push(enemy);
+}  
+
+function create() {
+ game.physics.startSystem(Phaser.Physics.ARCADE);
+ 
+ // created standerd ship 
+ ship = game.add.sprite(200,300,'ship1');
+ ship.anchor.setTo(0.5,0.5);
+ game.physics.enable(ship, Phaser.Physics.ARCADE);
+ ship.body.of
+ ship.body.maxAngular = 500;
+ ship.body.angularDrag = 50;
+ ship.body.acceleration = 100;
+ //enemy level 1
+ 
+ // options
+ game.input.onDown.add(gofull, this);
+}
+
+function offsceen(sprite){
+    
+    if (sprite.x < -10) {
+        sprite.x = 1300;
+    
+    }else if (sprite.x > 1300){
+        sprite.x = -10;   
+    }
+    
+    if (sprite.y < -10){
+        sprite.y = 820;
+        
+    }else if (sprite.y > 820){
+        sprite.y = -10;
+    }
+}
+
+function gofull() {
+
+    if (game.scale.isFullScreen){
+        game.scale.stopFullScreen();
+    }
+    else{
+        game.scale.startFullScreen(false);
+    }
+
+}
+
+var sted;
+
+ship.body.velocity.x = 0;
+ship.body.velocity.y = 0;
+
+function update() {
+    offsceen(ship);
+
+    for(var i = 0;i < enemys.length; ++i){
+        offsceen(enemys[i]);
+    }
+    ship.body.angularAcceleration = 0;
+    
+    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+        ship.body.angularAcceleration -= 400;
+    }
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+        ship.body.angularAcceleration += 400;
+    }
+    
+    if (game.input.keyboard.isDown(32)){
+        fireingMylazers('lazer_ship1',10);
+    }
+    
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+        game.physics.arcade.velocityFromAngle(ship.angle, 400, ship.body.velocity);
+    }
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+        if(sted >= 0){
+            sted -= 3;
+        }
+        
+        game.physics.arcade.velocityFromAngle(ship.angle, sted, ship.body.velocity);
+    }
+    
+    if(Math.floor((Math.random()*1000) + 1) < 30){
+        newEnemy('enemy1');
+
+    }
+
+
+}
+
+</script>
+
+</body>
+</html>
