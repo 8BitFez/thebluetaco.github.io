@@ -14,25 +14,30 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(1280, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(1280, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update,});
 
-
+// initalizing
 function preload() {
  game.load.image('ship1','assets/playerShip2_red.png');
  game.load.image('enemy1', 'assets/ufoBlue.png');
  game.load.image('lazer_ship1','assets/Lasers/laserBlue06.png');
 }
 
+var sted;
 var ship;
 var enemys = [];
 var bullets = [];
 var i = 0;
+
+//spawning functions
+
 function fireingMylazers(sprite,fireRate){
     if (i == 0){
-        var bullet = game.add.sprite(ship.x,ship.y, sprite);
+        var bullet = game.add.sprite(ship.x,(ship.y - 7), sprite);
         game.physics.enable( bullet, Phaser.Physics.ARCADE);
         game.physics.arcade.velocityFromAngle(ship.angle, 600, bullet.body.velocity);
         bullet.body.rotation = (ship.body.rotation);
+        bullets.push(bullet);
         i = fireRate;
     }else{
         i--;
@@ -58,22 +63,23 @@ function newEnemy(sprite){
 }  
 
 function create() {
- game.physics.startSystem(Phaser.Physics.ARCADE);
+
+     game.physics.startSystem(Phaser.Physics.ARCADE);
  
  // created standerd ship 
- ship = game.add.sprite(200,300,'ship1');
- ship.anchor.setTo(0.5,0.5);
- game.physics.enable(ship, Phaser.Physics.ARCADE);
- ship.body.of
- ship.body.maxAngular = 500;
- ship.body.angularDrag = 50;
- ship.body.acceleration = 100;
+    ship = game.add.sprite(200,300,'ship1');
+    ship.anchor.setTo(0.5,0.5);
+    game.physics.enable(ship, Phaser.Physics.ARCADE);
+    ship.body.maxAngular = 500;
+    ship.body.angularDrag = 50;
+    ship.body.acceleration = 100;
  //enemy level 1
- 
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
  // options
- game.input.onDown.add(gofull, this);
+    game.input.onDown.add(gofull, this);
 }
 
+// screen related functions
 function offsceen(sprite){
     
     if (sprite.x < -10) {
@@ -101,18 +107,8 @@ function gofull() {
     }
 
 }
-
-var sted;
-
-ship.body.velocity.x = 0;
-ship.body.velocity.y = 0;
-
-function update() {
-    offsceen(ship);
-
-    for(var i = 0;i < enemys.length; ++i){
-        offsceen(enemys[i]);
-    }
+// inputs
+function shipsInputs(){
     ship.body.angularAcceleration = 0;
     
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
@@ -133,17 +129,38 @@ function update() {
         if(sted >= 0){
             sted -= 3;
         }
-        
         game.physics.arcade.velocityFromAngle(ship.angle, sted, ship.body.velocity);
+    }
+}
+
+function update() {
+    debug();
+    offsceen(ship);
+    shipsInputs();
+    
+    for(var j = 0; j < enemys.length; ++j){
+        offsceen(enemys[j]);
+        for(var i =0; i < bullets.length; ++i){
+            if(game.physics.arcade.collide(enemys[j],bullets[i])){
+                enemys[j].destroy();
+                bullets[i].destroy();
+            }
+        }
     }
     
     if(Math.floor((Math.random()*1000) + 1) < 30){
         newEnemy('enemy1');
-
     }
-
-
 }
+function debug() {
+    this.game.debug.text(`Debugging Phaser ${Phaser.VERSION}`, 20, 20, 'yellow', 'Segoe UI');
+    this.game.debug.spriteInfo(ship, 32, 32);
+    this.game.debug.spriteCoords(ship, 32, 128);
+    this.game.debug.spriteBounds(ship);
+}
+
+
+
 
 </script>
 
