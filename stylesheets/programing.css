@@ -20,9 +20,9 @@ HEADER
 
 .jumbotron{
     text-align:center;
-    margin-bottom:10px;
     height:500px;
     padding-top:50px;
+    margin-bottom:0px;
 }
 
 .portrait_name{
@@ -54,12 +54,10 @@ MAIN CONTENT
 }
 
 article{
-    width:90%;
-    margin:0 auto;
+    width:100%;
     padding:10px;
-    border-radius:10px;
-    margin-bottom:10px;
-    border: 3px solid #1F3352;
+    margin-top:0px;
+    padding:10px;
 }
 
 /**********************************
@@ -95,6 +93,8 @@ Color 1:
 
 article{
     background:#eee;
+    border-bottom:5px solid #06D615;
+    margin-bottom:10px;
 }
 
 footer{
@@ -104,38 +104,53 @@ footer{
 .jumbotron{
   background: url('http://i1376.photobucket.com/albums/ah5/svillasenor/cropped_header_1446788000537_zpsagknujzb.jpg') no-repeat center;
   background-size: cover;
-  border-bottom:5px solid #0F93F5;
+  border-bottom:5px solid  #06D615;
+  margin-top:10px;
 }
 
 .portrait_name{
     background: rgba(230, 230, 230, 0.7);
 }
 body{
-    background:#060e1b;
+    background:#292E21;
 }
 .thumbnail{
-    border: 4px solid #0F93F5;
+    border: 4px solid #06D615;
     background-color:#262829;
     box-shadow: 5px 5px 1px #888888;
 }
 h3{
-    color:#19BEDE;
+    color:#3CBF0F;
     font-size:1.9em;
 }
+
+.info{
+}
 .caption{
-    border-top:5px solid #0F93F5;
-    background-color:#565657;
-    font-family:'Play', sans-serif;
-    font-weight:bold;
+  display: inline-block;
+  width:30%;
+  margin-left:10px;
+  background-color:#565657;
+  font-family:'Play', sans-serif;
+  font-weight:bold;
+  margin-right:0px;
+  border-left:4px solid #06D615;
 }
 .disc{
     color:#DDDDDD;
 }
+.wrapper,crazy-alert{
+padding:20px;
+text-align:left;
+width:60%;
+height:200px;
+display: inline-block;
+}
 #nav_background{
-  border-top: 2px solid #0F93F5;
-  border-right: 2px solid #0F93F5;
-  border-bottom: 2px solid #0F93F5;
-  background:#1F3352;
+  border-top: 2px solid #3CBF0F;
+  border-right: 2px solid #3CBF0F;
+  border-bottom: 2px solid #3CBF0F;
+  background:#292E21;
   display: block;
   position: fixed;
   top:10px;
@@ -143,17 +158,12 @@ h3{
   width:60px;
   height:43px;
 }
-#canvas{
-    position:fixed;
-    text-align:center;
-    z-index:-100000;
-}
 #menuToggle
 {
   display: block;
   position: fixed;
   top: 20px;
-  left: 20px;
+  left: 17px;
   z-index: 1;
   
   -webkit-user-select: none;
@@ -303,7 +313,7 @@ h3{
 }
 
 .wrapper {
-  width: 300px;
+  height:100px;
   margin: 5em auto;
   text-align: center;
 }
