@@ -29,7 +29,7 @@
         <span></span>
     
         <ul id="menu">
-          <a href="#"><li>Home</li></a>
+          <a href="index.html"><li>Home</li></a>
           <a href="#"><li>About</li></a>
           <a href="#"><li>Info</li></a>
           <a href="#"><li>Contact</li></a>
@@ -43,37 +43,265 @@
 <content>
 
 <div class="contents">
+  
     <article>
-        <h2></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent blandit lacus ut molestie dapibus. Curabitur congue vel elit sed condimentum. Maecenas efficitur placerat dui, sit amet auctor eros euismod a. In vitae pretium ligula, nec sagittis turpis. Etiam dignissim metus et leo euismod finibus. Pellentesque nec convallis magna. Fusce sem mi, sagittis eu convallis vel, lobortis in sapien. Donec mauris leo, viverra quis egestas molestie, ultrices nec purus.</p>
+        <h2>My Name is Saul Villasenor</h2>
+        <p>I Love programing, My favorite language is javascript and python. I play Video Games when am bored mostly fps type games and story drivin games. </p></p>
     </article>
 <div class="thumbnail_space">
 <div class="row">
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          
+          <div class="title"><h3>Texts Base Pokemon</h3></div>
+          <div class="boxcode">
+                                <p>@pokemons = [['Bulbasaur',[1,0,[0,1,2,3]]],['Charmander',[3,0,[4,5,6,7]]],['Squirtle',[2,0,[8,9,10,1]]],['jiggelypuff',[2,1,[3,4,5,3]]],['pikachu',[5,0,[1,6,7,10]]]]
+                    @lrange = [[100,200],[4,3],[6,5],[9,8],[14,13]]
+                    @eleTypes = ['None','Grass','Water','Fire','Ghast','electric']
+                    @infostat = ['','Type1:  ','Type2:  ','level:  ','HP:     ','attack: ','defence:','speed:  ','moves 1:','move 2:','move 3:','move 4:']
+                    @moveList = ['Vine Wipe','Body Slam','Solar Flare','Razer Leaf','Flame Thrower','Claw Slash','Iron Tail','Growl','Squrit Gun','Spin Dash','Thunder Bolt']
+                    i = 0
+                    b = true
+                    reset = true
+                    
+                    def inStatGen( key, level)
+                    
+                      tpoke = []
+                      tpoke << @pokemons[key][0]
+                      tpoke << @eleTypes[@pokemons[key][1][0]] # type one #
+                      tpoke << @eleTypes[@pokemons[key][1][1]] # type two # 
+                      tpoke << level # level set #
+                      tpoke << (rand(@lrange[level][1] - 1) + 20) # Heath ponts #                               
+                      tpoke << (rand(@lrange[level][1]) + @lrange[level][0]) # attack  setup#
+                      tpoke << (rand(@lrange[level][1]) + @lrange[level][0]) # Defence setup #
+                      tpoke << ((rand(@lrange[level][1]) + @lrange[level][0]) - 3) # Speed setup #
+                      tpoke << @moveList[@pokemons[key][1][2][0]] #Move 1#
+                      tpoke << @moveList[@pokemons[key][1][2][1]] #Move 2#
+                      tpoke << @moveList[@pokemons[key][1][2][2]] #Move 3#                                               
+                      tpoke << @moveList[@pokemons[key][1][2][3]] #Move 4# =>
+                      return tpoke
+                    
+                    end
+                    
+                    def pintstat(poke)
+                      
+                      c=0
+                      for stat in poke
+                        puts "#{@infostat[c]}#{stat}"
+                        c += 1  
+                      end
+                      
+                    end
+                    
+                    def updateBatScr()
+                      g = 0
+                      puts"\n"
+                      
+                      for stats in @infostat
+                        puts"#{stats}#{@urPoke[g]} | #{@opPoke[g]}"
+                        g += 1 
+                      end
+                    
+                    end
+                    
+                    def btPhase1()
+                      doge = false
+                      if @urPoke[7] <= @opPoke[7] then
+                        cdoge = 2*(@urPoke[7] + @opPoke[7])
+                        if rand(100)<cdoge then
+                          doge = true
+                        end
+                      end
+                      damage = 0
+                      if doge then
+                        puts "#{@opPoke[0]} doged the attack!"
+                      elsif 5 >= rand(100)
+                        puts "critcal hit"
+                        damage = 2*(rand(@urPoke[5]))
+                      else
+                    
+                        damage = (rand(@urPoke[5]))
+                      end
+                      return damage
+                    
+                    end
+                    
+                    def btPhase2()
+                      if 5 >= rand(100)
+                        puts "critcal hit"
+                        damage = 2*(rand(@opPoke[5]))
+                      else
+                    
+                        damage = (rand(@opPoke[5]))
+                      end
+                      return damage
+                    
+                    end
+                    
+                    while reset
+                    
+                      puts'Welcome to the world of Pokemon!'
+                      puts'Do you know how to play Pokemon? [Yes/No]'
+                      input = gets.chomp
+                    
+                      case input
+                        when 'Yes','yes'
+                          puts "ok then let's move on!"
+                          sleep(1)
+                          system "clear"
+                        when 'NO','no'
+                          puts "Ok then here's how to play"
+                          puts 'Pokemon is a game that animal like monsters battle to see who are the strongest.'
+                          puts 'Some pokemon can control elements like fire, water, grass, lighting and more!'
+                          puts ''
+                      end
+                    
+                      puts "What starter pokemon would you like to use?(Please pick a number!) \n"
+                      
+                      i = 0
+                      
+                      for pokemon in @pokemons
+                        puts"#{i + 1}: #{@pokemons[i][0]}"
+                        i = i + 1
+                      end
+                      
+                      puts"\n"
+                      
+                      input = gets.to_i
+                      input -= 1
+                      @urPoke = inStatGen(input,(rand(3) + 1))
+                      system "clear"
+                      puts"You picked !\n"
+                      
+                      pintstat(@urPoke)
+                      sleep(2)
+                      system "clear"
+                      mainmenu = true
+                    
+                      while mainmenu
+                        puts "Main Menu! (Pick a number!)"
+                        puts "1: Battle"
+                        puts "2: Pokemon stats"
+                        puts "3: Restart"
+                        puts "4: End \n"
+                    
+                        input = gets.chomp
+                        b =true  
+                    
+                        case input
+                          when'1' 
+                          
+                            puts "Chooseing Your Opponent"
+                            puts "Your Opponent is :"
+                            @opPoke = inStatGen(rand(2),(rand(3) + 1))
+                            pintstat(@opPoke)
+                            sleep(4)
+                            system"clear"
+                            puts "\n"
+                            while b
+                              system "clear"
+                              updateBatScr()
+                              puts"\n"
+                              puts "What would you like to do?"
+                              puts "1:Fight | 2:Run"
+                              input = gets.chomp
+                          
+                              case input
+                                when '1'
+                                  h = 8
+                                  i = 1
+                                  puts"What move would you like to Use"
+                                  while h <= 11 do
+                                    puts"#{i}: #{@urPoke[h]}"
+                                    h += 1
+                                    i += 1
+                                  end
+                                  input = gets.chomp
+                            
+                                  case input
+                                    when '1'
+                                      puts"#{@urPoke[0]} used #{@urPoke[8]} "
+                                      damage = (btPhase1())
+                                      puts "#{@opPoke[0]} took  #{damage} damage"
+                                      @opPoke[4] = (@opPoke[4] - damage)
+                                    when '2'
+                                      puts"#{@urPoke[0]} used #{@urPoke[9]} "
+                                      damage = (btPhase1())
+                                      puts "#{@opPoke[0]} took  #{damage} damage"
+                                      @opPoke[4] = (@opPoke[4] - damage)
+                                    when '3'
+                                      puts"#{@urPoke[0]} used #{@urPoke[10]} "
+                                      damage = (btPhase1())
+                                      puts "#{@opPoke[0]} took  #{damage} damage"
+                                      @opPoke[4] = (@opPoke[4] - damage)
+                                    when '4'
+                                      puts"#{@urPoke[0]} used #{@urPoke[11]} "
+                                      damage = (btPhase1())
+                                      puts "#{@opPoke[0]} took  #{damage} damage"
+                                      @opPoke[4] = (@opPoke[4] - damage)
+                                  end
+                                puts"\n"
+                                sleep(4)
+                                when '2'
+                                  puts "ok Quitings!"
+                                  b = false
+                              end
+                    
+                              if @opPoke[4] <= 0 then
+                                puts"#{@opPoke[0]} has fainted"
+                                puts"you haved won the battle!"
+                                puts"congrats!"
+                                b = false
+                                sleep(2)
+                              elsif @urPoke[4] <= 0 then
+                                puts"#{@urPoke[0]} has fainted"
+                                puts"you haved lost!"
+                                b = false
+                                sleep(2)
+                              else
+                                puts "#{@opPoke[0]} used #{@opPoke[(7+(rand(4)))]}"
+                                damage = btPhase2()
+                                puts "#{@urPoke[0]} took  #{damage} damage"
+                                @urPoke[4] = (@urPoke[4] - damage)
+                                sleep(2)
+                              end
+                            end
+                          
+                          when '2'
+                            pintstat(@urPoke)
+                          when '3'
+                            puts 'Reseting !'
+                            system 'clear'
+                            mainmenu = false
+                          when '4'
+                            puts 'OK Bye!'
+                            system "clear"
+                            mainmenu = false
+                            reset = false
+                        end
+                      end
+                    end  </p>
+          </div>
             <div class="caption">
-                 <h3></h3>
 
-                <p class="disc"></p>
+                <p class="disc">this was for a project to create an app in the termanal so i decied to create a text base pokemon games the best part about it is that you just need to add pokemon buy adding it to a array  </p>
 
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          
+          <div class="title"><h3>Music box from a PY</h3></div>
+            <div class="codebox"></div>
             <div class="caption">
-                 <h3></h3>
 
-                <p class="disc"></p>
+                <p class="disc">games in there Alpha stage and some consept for a game in UnReal engine3. nfjdshkfjhsj hdjsfh</p>
 
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div>
+          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
             <div class="caption">
                  <h3>Thumbnail label</h3>
 
@@ -86,7 +314,7 @@
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div>
+          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
             <div class="caption">
                  <h3>Thumbnail label</h3>
 
@@ -99,7 +327,7 @@
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div>
+          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
             <div class="caption">
                  <h3>Thumbnail label</h3>
 
@@ -112,7 +340,7 @@
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div>
+          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
             <div class="caption">
                  <h3>Thumbnail label</h3>
 

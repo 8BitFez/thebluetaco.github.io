@@ -92,7 +92,7 @@ Color 1:
 Color 1:
 Color 1:
 ***********************************/
-
+/* content  colors*/
 article{
     background:#eee;
 }
@@ -131,6 +131,7 @@ h3{
 .disc{
     color:#DDDDDD;
 }
+/* nav bar stuff*/
 #nav_background{
   border-top: 2px solid #0F93F5;
   border-right: 2px solid #0F93F5;
@@ -301,7 +302,7 @@ h3{
       
   }
 }
-
+/* comeing soon text*/
 .wrapper {
   width: 300px;
   margin: 5em auto;
