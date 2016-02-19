@@ -52,10 +52,14 @@ MAIN CONTENT
 }
 
 article{
-    width:100%;
+    width:90%;
+    margin:0 auto;
     padding:10px;
-    margin-top:0px;
-    padding:10px;
+    border-radius:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+    border: 3px solid #1F3352;
+    font-family:'play',sans-serif;
     font-size:20px;
 }
 
@@ -92,7 +96,6 @@ Color 1:
 
 article{
     background:#eee;
-    border-bottom:5px solid #06D615;
 }
 
 footer{
@@ -141,7 +144,7 @@ border: none;
 padding: 5px;
 margin-left:2%;
 width:95%;
-font: 24px/36px sans-serif;
+font: 24px sans-serif;
 color:#DDDDDD;
 height: 200px;
 overflow: auto;

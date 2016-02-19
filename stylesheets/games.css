@@ -20,13 +20,18 @@ HEADER
 
 .jumbotron{
     text-align:center;
-    margin-bottom:10px;
     height:500px;
     padding-top:50px;
-    margin-top:-20px;
+    margin-bottom:0px;
 }
 
-
+.portrait_name{
+    width:320px;
+    margin:0 auto;
+    padding:20px;
+    border-radius:20px;
+  
+}
 
 /**********************************
 MAIN CONTENT
@@ -34,17 +39,15 @@ MAIN CONTENT
 .thumbnail_space{
     max-width:90%;
     margin:0 auto;
+    margin-top:20px;
 }
 
-.thumbnail_image{
+.image{
   max-height:200px;
   max-width:242px;
   border: 4px solid #565657;
-  margin-bottom:10px;
-  margin-top:10px;
-
 }
-.thumbnail_image:hover{
+.image:hover{
     animation:borders-change 2s ease-in-out 1ms infinite alternate;
 }
 
@@ -54,7 +57,10 @@ article{
     padding:10px;
     border-radius:10px;
     margin-bottom:10px;
-    border: 3px solid #1F3352;
+    margin-top:10px;
+    border: 4px solid #1F3352;
+    font-family:'play',sans-serif;
+    font-size:20px;
 }
 
 /**********************************
@@ -87,7 +93,7 @@ Color 1:
 Color 1:
 Color 1:
 ***********************************/
-/* content  colors*/
+
 article{
     background:#eee;
 }
@@ -99,39 +105,97 @@ footer{
 .jumbotron{
   background: url('http://i1376.photobucket.com/albums/ah5/svillasenor/cropped_header_1446788000537_zpsagknujzb.jpg') no-repeat center;
   background-size: cover;
-  border-bottom:5px solid #0F93F5;
+  border-bottom:5px solid #DE3826;
+  margin-top:10px;
 }
 
 .portrait_name{
     background: rgba(230, 230, 230, 0.7);
 }
 body{
-    background:#060e1b;
+    background:#292E21;
 }
 .thumbnail{
-    border: 4px solid #0F93F5;
+    border: 4px solid #DE0B00;
     background-color:#262829;
     box-shadow: 5px 5px 1px #888888;
 }
 h3{
-    color:#19BEDE;
-    font-size:1.9em;
+    color:#DE3826;
+    font-size:2em;
+    padding:0px;
+  
+}
+
+.info{
 }
 .caption{
-    border-top:5px solid #0F93F5;
-    background-color:#565657;
-    font-family:'Play', sans-serif;
-    font-weight:bold;
+  margin:10px;
+  margin-left:2%;
+  width:95%;
+  background-color:#565657;
+  font-family:'Play', sans-serif;
+  font-weight:bold;
+  border-top:4px solid #DE3826;
 }
+
+.boxcode {
+border: none;
+padding: 5px;
+margin-left:2%;
+width:95%;
+font: 24px sans-serif;
+color:#DDDDDD;
+height: 200px;
+overflow: auto;
+}
+
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid #DE0B00;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #DE0B00;  
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #88ba1c;  
+}
+
+.title{
+  margin:-10px 10px 20px 10px;
+  font-family:'Play', sans-serif;
+  font-weight:bold;
+  padding:0px;
+  border-bottom:4px solid #DE2011;
+}
+
 .disc{
     color:#DDDDDD;
+    text-align:center;
+    font-size:20px;
 }
-/* nav bar stuff*/
+.wrapper,crazy-alert{
+margin:20px;
+padding:20px;
+width:70%;
+height:500px;
+margin-left:13%;
+margin-bottom:85px;
+
+}
 #nav_background{
-  border-top: 2px solid #0F93F5;
-  border-right: 2px solid #0F93F5;
-  border-bottom: 2px solid #0F93F5;
-  background:#1F3352;
+  border-top: 2px solid #DE0B00;
+  border-right: 2px solid #DE0B00;
+  border-bottom: 2px solid #DE0B00;
+  background:#292E21;
   display: block;
   position: fixed;
   top:10px;
@@ -139,17 +203,12 @@ h3{
   width:60px;
   height:43px;
 }
-#canvas{
-    position:fixed;
-    text-align:center;
-    z-index:-100000;
-}
 #menuToggle
 {
   display: block;
   position: fixed;
   top: 20px;
-  left: 20px;
+  left: 17px;
   z-index: 1;
   
   -webkit-user-select: none;
@@ -297,10 +356,10 @@ h3{
       
   }
 }
-/* comeing soon text*/
+
 .wrapper {
-  width: 300px;
-  margin: 5em auto;
+  height:100px;
+  
   text-align: center;
 }
 .crazy-alert {
