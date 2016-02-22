@@ -292,7 +292,27 @@
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
           <div class="title"><h3>Music box from a PY</h3></div>
-            <div class="boxcode"><p></p></div>
+            <div class="boxcode"><p>def getTax(tagPrice):
+    return tagPrice * 0.0925
+def GetClearancePrice(tagPrice):
+    clearancePrice= 0.6*tagPrice
+    totalPrice=tagPrice-clearancePrice
+    return totalPrice
+    
+account = 1000;
+while account > 0:
+    print ("You have $" + str(account) + " left")
+    purchasePrice = float (input ("What is the ticket price for the item you want to buy? "))
+    clearance = GetClearancePrice(purchasePrice)
+    tax = getTax (clearance)
+    price = clearance + tax
+    print(" the total with clearance is: $"+str(clearance))
+    print ("The total with tax is: $" + str(price))
+    account = account - (price)
+    print ("Thank you for your purchase!")
+
+print ("You are out of money... Goodbye!")
+</p></div>
             <div class="caption">
 
                 <p class="disc">This was for a project it incuded the raspberru pi it a small computer.it called the music py it grabed songs from a folder that you could upload too and random song from that folder would play</p>
