@@ -138,7 +138,10 @@ h3{
   font-weight:bold;
   border-top:4px solid #06D615;
 }
-
+#id{
+  font-family:play,sans-serif;
+  font-size:2em;
+}
 .boxcode {
 border: none;
 padding: 5px;

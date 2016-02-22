@@ -126,7 +126,10 @@ h3{
     padding:0px;
   
 }
-
+#id{
+  font-family:play,sans-serif;
+  font-size:2em;
+}
 .info{
 }
 .caption{

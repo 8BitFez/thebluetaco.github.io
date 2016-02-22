@@ -45,31 +45,273 @@
 <div class="contents">
   
     <article>
-        <h2>Computer Programing</h2>
-        <p>This page consest of any text or backended programs that do cool things! </p>
+        <h2>Games in Alpha</h2>
+        <p>Thease are game that are in alpha and some of them were just to mess around in a spasific engine and other were projects. Not all od theses will ever be contenued.</p>
     </article>
 <div class="thumbnail_space">
 <div class="row">
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="title"><h3>Texts Base Pokemon</h3></div>
+          <div class="title"><h3>Planet Finder</h3></div>
           <div class="boxcode">
-                                <p></p>
+                  <p><a>Planetfinder</a></p>
           </div>
             <div class="caption">
 
-                <p class="disc">this was for a project to create an app in the termanal so i decied to create a text base pokemon games the best part about it is that you just need to add pokemon buy adding it to a array  </p>
+                <p class="disc">This Game is on my main task list i want to get it done but right now i have no time but it's still in devloment. Right now this game is about you in a ship that goese around shooting ufo! </p>
 
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="title"><h3>Music box from a PY</h3></div>
-            <div class="codebox"><p></p></div>
+          <div class="title"><h3>pyChromium</h3></div>
+            <div class="boxcode"><p>import pygame, pygame.locals, sys, random, pygame.mixer, pygame.font,pygame.key,pygame.mouse
+
+# Initializations
+pygame.init()
+pygame.font.init()
+pygame.display.set_caption('PyChromium')
+mainclock = pygame.time.Clock()
+window = pygame.display.set_mode((900,700,),0,32)
+pygame.mixer.init()
+pygame.font.init()
+myFont=pygame.font.SysFont('Arial',30,True,False)
+pygame.mouse.set_visible(False)
+enemyHitHero=False
+# Score var
+timer=60
+score=0
+endMs=""
+# explosions
+explosions=[]
+explosionImg=pygame.image.load('enemyExplo.png')
+# Teak-able constants
+HEROSHOTINTERVAL = 5
+BGCOLOR = (0,0,0)
+SPAWNINGINTERVAL = 15
+STARTENEMYY=-64
+TIMERINTERVAL=30
+# Create the hero Sprite
+hero = pygame.sprite.Sprite()
+hero.image = pygame.image.load('hero.png')
+hero.rect = pygame.Rect(0, 0, 20, 20)
+
+#setup the enemy0
+enemy0img=pygame.image.load('enemy00.png')
+spawnEnemy0s=[]
+spawnDelay=SPAWNINGINTERVAL
+endGame=False
+enemyY=-65
+enemyX=random.randrange(0,700,1)
+enemyXpos=0
+
+# Setup the heroAmmo
+heroAmmoImg = pygame.image.load('heroAmmo00.png')
+heroAmmos = []
+heroAmmoDelay = HEROSHOTINTERVAL
+shooting = False
+shuttingDown = False
+timerdelay=TIMERINTERVAL
+deadHero=False
+
+#set sound and start
+gameMusic=pygame.mixer.Sound("music_game.wav")
+gameMusic.play(-1)
+explStd=pygame.mixer.Sound("exploStd.wav")
+
+
+while not shuttingDown:
+    # Handle user input
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            shuttingDown = True
+            break
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            shooting = True
+        if event.type == pygame.MOUSEBUTTONUP:
+            shooting = False
+        if event.type == pygame.KEYDOWN:
+            #27 is the value of the Esc key
+            if event.key ==27:
+                pause= True
+                while pause:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN:
+                            if event.key ==27:
+                                pause=False
+    if shuttingDown:
+        break
+
+    # Fire a bullet
+    if not deadHero:
+        if shooting:
+            # If it's time
+            if heroAmmoDelay < 0:
+                newheroAmmo = pygame.sprite.Sprite()
+                newheroAmmo.image = heroAmmoImg
+                newheroAmmo.rect = pygame.Rect(hero.rect.left+26,hero.rect.top,6,16)
+                heroAmmos.append(newheroAmmo)
+                heroAmmoDelay = HEROSHOTINTERVAL
+            else:
+                heroAmmoDelay -= 1
+
+    # Start painting with a blank screen
+    window.fill(BGCOLOR)
+
+    # Put all the bullets up there    
+    for heroAmmo in heroAmmos:
+        # First move it
+        heroAmmo.rect.top -= 10
+        # And kill it if it goes off the screen
+        if heroAmmo.rect.top < -80:
+            heroAmmos.remove(heroAmmo)
+            heroAmmo.kill()
+        else:
+            window.blit(heroAmmo.image, heroAmmo.rect)
+
+    #if need more enemy
+    if not endGame:
+        if spawnDelay < 0:
+            newEnemy0 = pygame.sprite.Sprite()
+            newEnemy0.image = enemy0img
+            newEnemy0.rect = pygame.Rect(random.randrange(0,700,64),STARTENEMYY,64,64)
+            spawnEnemy0s.append(newEnemy0)
+            spawnDelay=SPAWNINGINTERVAL
+        else:
+            spawnDelay=spawnDelay-1
+    #see if they go off the screen
+    for enemy in spawnEnemy0s:
+        enemy.rect.top +=6
+        if enemy.rect.top > 800:
+            spawnEnemy0s.remove(enemy)
+            enemy.kill()
+            score=score-1
+            window.blit(scoreRender,pygame.Rect(570,668,200,200))
+        else:
+            window.blit(enemy.image,enemy.rect)
+    Enemy=pygame.Rect(enemyX,enemyY,64,64)
+    #explosion anamation 
+    for explosion in explosions:
+        if explosion.delay <= 0:
+            if not explosion.out and explosion.size < 0.1:
+                explosions.remove(explosion)
+            else:
+                if explosion.out:
+                    explosion.size += 0.1
+                    if explosion.size > 2:
+                        explosion.out = False
+                else:
+                    explosion.size -= 0.1
+                window.blit(pygame.transform.scale(explosion.image, (int(explosion.image.get_width()*explosion.size), int(explosion.image.get_height()*explosion.size))), (explosion.rect.left+(int(32-32*explosion.size)), explosion.rect.top+(int(32-32*explosion.size))))
+        else:
+            explosion.delay -= 1
+    # see when hit and kill them
+    for heroAmmo in heroAmmos:
+        for enemy in spawnEnemy0s:
+            if pygame.sprite.collide_rect(heroAmmo,enemy):
+                explStd.play(1)
+                spawnEnemy0s.remove(enemy)
+                enemy.kill()
+                heroAmmos.remove(heroAmmo)
+                heroAmmo.kill()
+                score=score+1
+                window.blit(scoreRender,pygame.Rect(570,668,200,200))
+    #explosions
+                
+                explosion1 = pygame.sprite.Sprite()
+                explosion1.size = 0.1
+                explosion1.delay = 0
+                explosion1.out = True
+                explosion1.rect = pygame.Rect(enemy.rect.left, enemy.rect.top, 64, 64)
+                explosion1.image = explosionImg
+                explosions.append(explosion1)
+                explosion2 = pygame.sprite.Sprite()
+                explosion2.size = 0.1
+                explosion2.delay = 5
+                explosion2.out = True
+                explosion2.rect = pygame.Rect(enemy.rect.left-20, enemy.rect.top-20, 64, 64)
+                explosion2.image = explosionImg
+                explosions.append(explosion2)
+                explosion3 = pygame.sprite.Sprite()
+                explosion3.size = 0.1
+                explosion3.delay = 5
+                explosion3.out = True
+                explosion3.rect = pygame.Rect(enemy.rect.left+20, enemy.rect.top-20, 64, 64)
+                explosion3.image = explosionImg
+                explosions.append(explosion3)
+                explosion4 = pygame.sprite.Sprite()
+                explosion4.size = 0.1
+                explosion4.delay = 10
+                explosion4.out = True
+                explosion4.rect = pygame.Rect(enemy.rect.left, enemy.rect.top-40, 64, 64)
+                explosion4.image = explosionImg
+                explosions.append(explosion4)
+                
+    # timer
+    if timerdelay == 0 and not endGame:
+        timer=timer-1
+        timerdelay=TIMERINTERVAL
+        window.blit(timerRender,pygame.Rect(1,668,100,100))
+        if endGame:
+            while endGame:
+                window.blit(LoseRender,pygame.Rect(100,100,200,200))
+    else:
+        timerdelay=timerdelay-1
+#see if thay get hit
+    for enemy in spawnEnemy0s:
+        if pygame.sprite.collide_rect(hero,enemy) or endGame:
+            spawnEnemy0s.remove(enemy)
+            enemy.kill()
+            hero.kill()
+            deadHero=True
+            endGame=True
+        if pygame.sprite.collide_rect(hero,enemy):
+            enemyHitHero=True
+            for enemy in spawnEnemy0s:
+                spawnEnemy0s.remove(enemy)
+                enemy.kill()
+
+    #if the timer runs out to stop every thing    
+    if timer<=0:
+        endGame=True
+    #chang the end mesage
+    if endGame:
+        endMS="Time ran out"
+    if enemyHitHero:
+        endMs="you got killed"   
+    
+        
+   #render all the feedback
+
+    timerRect =pygame.Rect(1,668,100,100)
+    LoseRender=myFont.render(endMs,True,(0,100,0))
+    scoreRender=myFont.render("Score: "+str(score),True,(0,100,0))
+    timerRender =myFont.render("Time: "+str(timer),True,(0,100,0))
+    if not endGame:
+        window.blit(timerRender,timerRect)
+        window.blit(scoreRender,pygame.Rect(570,668,200,200))
+    else:
+        window.blit(LoseRender,pygame.Rect(340,300,200,200))
+    #see if the hero die to stop updating him
+    if not deadHero:
+        # Get the current mouse position    
+        (mousex, mousey) = pygame.mouse.get_pos()
+        # And move the hero relative to that
+        hero.rect.left = mousex - 30
+        hero.rect.top = mousey - 54
+        window.blit(hero.image, hero.rect)
+    mainclock.tick(80)
+    pygame.display.update()
+
+        
+
+
+</p></div>
             <div class="caption">
 
-                <p class="disc">games in there Alpha stage and some consept for a game in UnReal engine3. nfjdshkfjhsj hdjsfh</p>
+                <p class="disc">This game i made in the first year of high school it was a honor project it was to try to copy a real game as best as you can without looking into the codeing of the game and only playing it i got super close but unfortantly the engine this was wrote in stop and it won't work anymore. </p>
 
             </div>
         </div>

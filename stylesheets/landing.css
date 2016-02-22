@@ -23,7 +23,6 @@ HEADER
     margin-bottom:10px;
     height:500px;
     padding-top:50px;
-    margin-top:-20px;
 }
 
 
@@ -103,7 +102,9 @@ footer{
 }
 
 .portrait_name{
+    padding:10px;
     background: rgba(230, 230, 230, 0.7);
+    border-radius:30px;
 }
 body{
     background:#060e1b;
