@@ -14,7 +14,7 @@ HEADER
 ***********************************/
 
 .portrait{
-    max-width:auto;
+    max-width:10px auto;
     max-height:250px;
 }
 
@@ -76,6 +76,8 @@ FONTS
 ***********************************/
 .portrait_name{
     font-family: 'Audiowide', cursive;
+    width: 320px;
+    margin-left:37%;
 }
 
 /**********************************
