@@ -16,6 +16,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--This makes the webpage check the size of the device it's on. This lets your page be mobile responsive-->
   <link href='http://fonts.googleapis.com/css?family=Merriweather+Sans:800' rel='stylesheet' type='text/css'>
+  <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Roboto:400"/>
   <?xml version="1.0" encoding="utf-8"?>
 </head>
 <body>
@@ -30,19 +32,54 @@
     
         <ul id="menu">
           <a href="index.html"><li>Home</li></a>
-          <a href="#"><li>About</li></a>
-          <a href="#"><li>Info</li></a>
-          <a href="#"><li>Contact</li></a>
-          <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
+          <a href="programing.html"><li>Programing</li></a>
+          <a href="games.html"><li>Games in Alpha</li></a>
         </ul>
       </div>
     </nav>
   </div>
-  <div class="jumbotron">
-  </div>
 <content>
 
 <div class="contents">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="http://placehold.it/900x500" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+              
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://placehold.it/900x500" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+             
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://placehold.it/900x500" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>One more for good measure.</h1>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
   
     <article>
         <h2>Games in Alpha</h2>
@@ -52,11 +89,13 @@
 <div class="row">
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
-          <div class="title"><h3>Planet Finder</h3></div>
-                  <a id="game" href="firstgame.html">Planetfinder</a>
+            <div class="title"><h3>Planet Finder</h3></div>
+                <div class="spaceing">
+                <a href="firstgame.html" target="blank_"><button>Planet Finder</button></a>
+                </div>
             <div class="caption">
 
-                <p class="disc">This Game is on my main task list i want to get it done but right now i have no time but it's still in devloment. Right now this game is about you in a ship that goese around shooting ufo! </p>
+                <p class="disc">This Game is on my main task list i want to get it done but right now i have no time but it's still in devloment. Right now this game is about you in a ship that goese around shooting ufo!<br>move with arrows<br>shoot with space </p>
 
             </div>
         </div>
@@ -317,7 +356,7 @@ while not shuttingDown:
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
           <div class="title"><h3>Comming Soon!</h3></div>
-          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
+          <div class="glitch leftC" data-text="Coming">Coming</div><div class="glitch right" data-text="soon">soon</div>
             <div class="caption">
 
                 <p class="disc">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
@@ -330,7 +369,7 @@ while not shuttingDown:
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
           <div class="title"><h3>Comming Soon!</h3></div>
-          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
+          <div class="glitch leftC" data-text="Coming">Coming</div><div class="glitch right" data-text="soon">soon</div>
             <div class="caption">
 
                 <p class="disc">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
@@ -343,7 +382,7 @@ while not shuttingDown:
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
           <div class="title"><h3>Comming Soon!</h3></div>
-          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
+          <div class="glitch leftC" data-text="Coming">Coming</div><div class="glitch right" data-text="soon">soon</div>
             <div class="caption">
 
                 <p class="disc">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
@@ -356,7 +395,7 @@ while not shuttingDown:
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
           <div class="title"><h3>Comming Soon!</h3></div>
-          <a target="_blank" href=""><div class="wrapper"><div class="crazy-alert"><span class="bigger">Coming Soon?!</span></div></div></a>
+          <div class="glitch leftC" data-text="Coming">Coming</div><div class="glitch right" data-text="soon">soon</div>
             <div class="caption">
 
                 <p class="disc">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id
@@ -376,9 +415,25 @@ while not shuttingDown:
 <footer>
     Footer
 </footer>
+	</body>
+</html>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.contenthover.js"></script> 
+    <script>
+$(function(){
+    $('.myimage').contenthover({
+      overlay_background:'orangered',
+    overlay_opacity:0.8
+    });
+});
+</script>
 <!--This stuff is the javascript information. The top is for jQuery, the second is Bootstrap, and the 3rd is one one you will edit-->
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="js/scripts.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/index.js"></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="js/car.js"></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 </body>
