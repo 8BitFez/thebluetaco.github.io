@@ -1,224 +1,152 @@
-//http://codepen.io/VladikAN/pen/GpeRXy
-//http://codepen.io/Tbgse/pen/dYaJyJ
-"use strict";
+/*
+░█▀▀▀█ ░█▀▀█ ▀▀█▀▀ ▀█▀ ░█▀▀▀█ ░█▄─░█ ░█▀▀▀█ 
+░█──░█ ░█▄▄█ ─░█── ░█─ ░█──░█ ░█░█░█ ─▀▀▀▄▄ 
+░█▄▄▄█ ░█─── ─░█── ▄█▄ ░█▄▄▄█ ░█──▀█ ░█▄▄▄█ 
+*/
 
-var canvas = document.getElementById('canvas'),
-  ctx = canvas.getContext('2d'),
-  w = canvas.width = window.innerWidth,
-  h = canvas.height = window.innerHeight,
+var hexagon_radius = 100;
+var hexagon_max_absolute_speed = 0.9;
+var hexagon_line_width = 10;
+var hexagon_color = '#ff00d9';
+
+/*
+░█▀▀█ ░█▀▀▀█ ░█▀▀▄ ░█▀▀▀ 
+░█─── ░█──░█ ░█─░█ ░█▀▀▀ 
+░█▄▄█ ░█▄▄▄█ ░█▄▄▀ ░█▄▄▄ 
+*/
+
+var canvas, ctx;
+var img, hex, text;
+var hexagons = [];
+var x,y,side,size;
+
+var s3p3 = Math.sqrt(3);
+side = 0;
+size = 100;
+function init() {
+	
+	canvas = document.getElementById('c');
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	canvas.style.width = canvas.width + 'px';
+	canvas.style.height = canvas.height + 'px';
+	ctx = canvas.getContext('2d');
+	img = document.getElementById('s');
+	placeHexagon(
+                (canvas.width / 2),
+                (canvas.height / 2),
+				{
+					l: 0
+				}
+			);
+	x = (canvas.width / 2);
+    y = (canvas.height / 2);
+	ctx.lineWidth = hexagon_line_width;
+	loop();
+	
+}
+
+
+
+function loop() {
+	requestAnimFrame(loop);
+	
+	//ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.font = "50px Arial";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.beginPath();
+
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.fillText('Comming Soon!', ((canvas.width / 2) - 170), ((canvas.height / 2) + 200));
+    drawHexagonPath(0);
+	ctx.shadowColor = hexagon_color;
+	ctx.shadowBlur = 20;
+	ctx.strokeStyle = hexagon_color;
+  
+    ctx.stroke();
+    //ctx.fillRect (25, 25, 150, 150);
     
-  hue = 217,
-  stars = [],
-  count = 0,
-  maxStars = 1400;
-
-// Thanks @jackrugile for the performance tip! http://codepen.io/jackrugile/pen/BjBGoM
-// Cache gradient
-var canvas2 = document.createElement('canvas'),
-    ctx2 = canvas2.getContext('2d');
-    canvas2.width = 100;
-    canvas2.height = 100;
-var half = canvas2.width/2,
-    gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
-    gradient2.addColorStop(0.025, '#fff');
-    gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
-    gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
-    gradient2.addColorStop(1, 'transparent');
-
-    ctx2.fillStyle = gradient2;
-    ctx2.beginPath();
-    ctx2.arc(half, half, half, 0, Math.PI * 2);
-    ctx2.fill();
-
-// End cache
-
-function random(min, max) {
-  if (arguments.length < 2) {
-    max = min;
-    min = 0;
-  }
-  
-  if (min > max) {
-    var hold = max;
-    max = min;
-    min = hold;
-  }
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function maxOrbit(x,y) {
-  var max = Math.max(x,y),
-      diameter = Math.round(Math.sqrt(max*max + max*max));
-  return diameter/2;
-}
-
-var Star = function() {
-
-  this.orbitRadius = random(maxOrbit(w,h));
-  this.radius = random(60, this.orbitRadius) / 12;
-  this.orbitX = w / 2;
-  this.orbitY = h / 2;
-  this.timePassed = random(0, maxStars);
-  this.speed = random(this.orbitRadius) / 50000;
-  this.alpha = random(2, 10) / 10;
-
-  count++;
-  stars[count] = this;
-}
-
-Star.prototype.draw = function() {
-  var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
-      y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
-      twinkle = random(10);
-
-  if (twinkle === 1 && this.alpha > 0) {
-    this.alpha -= 0.05;
-  } else if (twinkle === 2 && this.alpha < 1) {
-    this.alpha += 0.05;
-  }
-
-  ctx.globalAlpha = this.alpha;
-    ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
-  this.timePassed += this.speed;
-}
-
-for (var i = 0; i < maxStars; i++) {
-  new Star();
-}
-
-function animation() {
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.globalAlpha = 0.8;
-    ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 1)';
-    ctx.fillRect(0, 0, w, h)
-  
-  ctx.globalCompositeOperation = 'lighter';
-  for (var i = 1, l = stars.length; i < l; i++) {
-    stars[i].draw();
-  };  
-  
-  window.requestAnimationFrame(animation);
-}
-
-animation();
-var document = window.document,
-
-  $_window = $(window),
-
-  timeout,
-
-  isAnimating = false,
-  slideNum = 0,
-
-  $welcomeBarL = $(".bt-sl-solid-l"),
-  $welcomeBarR = $(".bt-sl-solid-r"),
-  $btSlideActive = $(".welcome-button").find(".bt-slide-l"),
-
-  $welcomeBtn = $(".welcome-button a");
-
-//------//
-
-//Delegation
-$welcomeBtn.on('mouseenter', function() {
-  var timeout,
-    $slidebar = $('.bt-slider-' + slideNum),
-
-    animate = function() {
-
-      timeout = setTimeout(function() {
-        clearTimeout(timeout);
-
-        if (slideNum === 5) {
-
-          isAnimating = false;
-          slideNum = 0;
-
-        } else {
-
-          isAnimating = true;
-          $slidebar = $('.bt-slider-' + slideNum);
-
-          $slidebar.removeClass('bt-slide-l');
-
-          slideNum++;
-
-          animate();
-
-        }
-
-      }, 100);
+    ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+    for (side; side < 7; side++) {
+        ctx.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
     };
+    side = 0
+    ctx.shadowColor = "";
+    ctx.fillStyle ="#333333";
+    ctx.fill();
+    ctx.drawImage(img,((canvas.width / 2) - 50),((canvas.height / 2) - 50),100,100);
+    ctx.fillStyle = "rgba(40,0,40,0.5)";
 
-  animate();
+}
 
-});
+function placeHexagon(x, y, opts) {
+	var l = Math.floor(Math.random() * 6),
+		p = Math.random();
+	
+	if(!opts) opts = {};
+	
+	hex = ({sl: opts.l || opts.l === 0 ? opts.l : l,
+		p: opts.p || opts.p === 0 ? opts.p : p,
+		x: x,
+		y: y,
+		speed: opts.speed || opts.speed === 0 ? opts.speed : ( Math.random() * hexagon_max_absolute_speed * 2 - hexagon_max_absolute_speed )
+	});
+}
 
-$welcomeBtn.on('mouseout', function() {
-  var timeout,
-    $slidebar = $('.bt-slider-' + slideNum),
+function drawHexagonPath(hex_index) {
+	ctx.moveTo(
+		hex.x + Math.cos( Math.PI / 3 * hex.sl ) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + 2) ) * hexagon_radius * hex.p,
+		hex.y + Math.sin( Math.PI / 3 * hex.sl ) * hexagon_radius +  Math.sin( Math.PI / 3 * (hex.sl + 2) ) * hexagon_radius * hex.p
+	);
+	
+	//ctx.moveTo(hex.x, hex.y);
+	
+	ctx.lineTo(
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius
+	);
+    
+    ctx.lineTo(
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius
+	);
+	
+	ctx.lineTo(
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 2 ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 2 ) ) * hexagon_radius
+	);
+	
+	ctx.lineTo(
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius
+	);
+	
+	ctx.lineTo(
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + 5) ) * hexagon_radius * hex.p,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius + Math.sin( Math.PI / 3 * (hex.sl + 5) ) * hexagon_radius * hex.p
+	);
+	
+	hex.p += hex.speed;
+	if(hex.p > 1 || hex.p < 0) {
+		hex.p = hex.speed < 0 ? 1 : 0;
+		hex.sl += hex.speed < 0 ? -1 : 1;
+		hex.sl = hex.sl % 6;
+		hex.sl = hex.sl < 0 ? 4 - hex.sl : hex.sl;
+	}
+	
+	hexagons[hex_index] = hex;
+	
+}
 
-    animate = function() {
+window.onload = function() {
+	init();
+};
 
-      timeout = setTimeout(function() {
-        clearTimeout(timeout);
-
-        if (slideNum === 5) {
-
-          isAnimating = false;
-          slideNum = 0;
-
-        } else {
-
-          isAnimating = true;
-          $slidebar = $('.bt-slider-' + slideNum);
-
-          $slidebar.addClass('bt-slide-l');
-
-          slideNum++;
-
-          animate();
-
-        }
-
-      }, 100);
-    };
-
-  animate();
-
-});
-
-$_window.on("load", function() {
-
-  timeout = setTimeout(function() {
-    clearTimeout();
-
-    $welcomeBarL.removeClass("down");
-    $welcomeBarR.removeClass("down");
-
-  }, 100);
-
-  timeout = setTimeout(function() {
-    clearTimeout();
-
-    $welcomeBarL.removeClass("out");
-    $welcomeBarR.removeClass("out");
-
-  }, 400);
-
-  timeout = setTimeout(function() {
-    clearTimeout();
-
-    $welcomeBtn.removeClass("out");
-
-  }, 800);
-
-  timeout = setTimeout(function() {
-    clearTimeout();
-
-    $btSlideActive.removeClass("out");
-
-  }, 1000);
-
-});
-
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 100000);
+          };
+})();
