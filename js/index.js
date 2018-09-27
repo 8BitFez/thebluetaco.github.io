@@ -4,16 +4,16 @@
 //░█──░█ ░█▄▄█ ─░█── ░█─ ░█──░█ ░█░█░█ ─▀▀▀▄▄ 
 //░█▄▄▄█ ░█─── ─░█── ▄█▄ ░█▄▄▄█ ░█──▀█ ░█▄▄▄█ 
 
-var HORIZON_Y = 0.4;
-var SPACING_Y = 2.2;
-var SPACING_X = 35;
-var SPACING_SCANLINES = 12;
-var SKEW = 15;
-var SPEED = 0.024;
+var horizon_Y = 0.4;
+var spacing_Y = 2.2;
+var spacing_x = 35;
+var spacingScanLines = 12;
+var skew = 15;
+var speed = 0.024;
 var P_GLITCH = 0.007;
 var GLITCH_PAUSE_DURATION = [100, 200]; // min, max in ms.
-var COLOR = [220, 0, 220];
-var TITLE = 'Coming Soon';
+var color = [220, 0, 220];
+var title = 'Coming Soon';
 //hex Settings
 var hexagon_radius = 300;
 var hexagon_max_absolute_speed = 0.9;
@@ -45,11 +45,11 @@ var audio = new Audio('boop.mp3');
 function onResize() {
 	var h = state.h = window.innerHeight * 2;
 	var w = state.w = window.innerWidth * 2;
-	var y0 = state.y0 = h * (1 - HORIZON_Y);
+	var y0 = state.y0 = h * (1 - horizon_Y);
 	state.nHorizontal =
-	Math.pow(h * HORIZON_Y, 1 / SPACING_Y);
-	state.nVertical = Math.ceil(w / SPACING_X);
-	state.nScanlines = Math.ceil(h / SPACING_SCANLINES);
+	Math.pow(h * horizon_Y, 1 / spacing_Y);
+	state.nVertical = Math.ceil(w / spacing_x);
+	state.nScanlines = Math.ceil(h / spacingScanLines);
 
 	// Update the DOM.
 	ctxs.forEach(function (ctx) {
@@ -80,9 +80,9 @@ function drawStatic() {
     ctx.shadowBlur = 20;
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.fillStyle = 'rgba(' + COLOR + ', 1)';
+	ctx.fillStyle = 'rgba(' + color + ', 1)';
 	ctx.font = 'bold 64pt "Monoton", monospace';
-	ctx.strokeText(TITLE, w / 2,(h / 2) - 500);
+	ctx.strokeText(title, w / 2,(h / 2) - 500);
 
 	drawScreenArtifacts();
 }
@@ -97,10 +97,10 @@ function drawScreenArtifacts() {var
 	ctx.beginPath();
 	var glow = ctx.createRadialGradient(
 	w / 2, h / 2, Math.max(w, h),
-	w / 2, h / 2, SPACING_X * 1.5);
+	w / 2, h / 2, spacing_x * 1.5);
 
 	glow.addColorStop(0.2, 'rgba(0, 0, 0, 0.16)');
-	glow.addColorStop(1.0, 'rgba(' + COLOR + ', 0.16)');
+	glow.addColorStop(1.0, 'rgba(' + color + ', 0.16)');
 	ctx.fillStyle = glow;
 	ctx.fillRect(0, 0, w, h);
 }
@@ -265,7 +265,7 @@ function stroke(ctx)
 
 
 
-{var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},_ref2$w = _ref2.w1,w1 = _ref2$w === undefined ? 10 : _ref2$w,_ref2$w2 = _ref2.w2,w2 = _ref2$w2 === undefined ? 2 : _ref2$w2,_ref2$c = _ref2.c1,c1 = _ref2$c === undefined ? 'rgba(' + COLOR + ', 0.5)' : _ref2$c,_ref2$c2 = _ref2.c2,c2 = _ref2$c2 === undefined ? 'rgb(' + COLOR + ')' : _ref2$c2;
+{var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},_ref2$w = _ref2.w1,w1 = _ref2$w === undefined ? 10 : _ref2$w,_ref2$w2 = _ref2.w2,w2 = _ref2$w2 === undefined ? 2 : _ref2$w2,_ref2$c = _ref2.c1,c1 = _ref2$c === undefined ? 'rgba(' + color + ', 0.5)' : _ref2$c,_ref2$c2 = _ref2.c2,c2 = _ref2$c2 === undefined ? 'rgb(' + color + ')' : _ref2$c2;
 	ctx.lineWidth = w1;
 	ctx.strokeStyle = c1;
 	ctx.stroke();
