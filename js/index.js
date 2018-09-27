@@ -57,7 +57,7 @@ function loop() {
 	ctx.beginPath();
 
     ctx.fillStyle = "rgba(255,255,255,1)";
-    ctx.fillText('Comming Soon!', ((canvas.width / 2) - 170), ((canvas.height / 2) + 200));
+    ctx.fillText('Coming Soon!', ((canvas.width / 2) - 170), ((canvas.height / 2) + 200));
     drawHexagonPath(0);
 	ctx.shadowColor = hexagon_color;
 	ctx.shadowBlur = 20;
