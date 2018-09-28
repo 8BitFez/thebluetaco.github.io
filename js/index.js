@@ -4,16 +4,16 @@
 //░█──░█ ░█▄▄█ ─░█── ░█─ ░█──░█ ░█░█░█ ─▀▀▀▄▄ 
 //░█▄▄▄█ ░█─── ─░█── ▄█▄ ░█▄▄▄█ ░█──▀█ ░█▄▄▄█ 
 
-var horizon_Y = 0.4;
-var spacing_Y = 2.2;
-var spacing_x = 35;
-var spacingScanLines = 12;
-var skew = 15;
-var speed = 0.024;
+var HORIZON_Y = 0.4;
+var SPACING_Y = 2.2;
+var SPACING_X = 35;
+var SPACING_SCANLINES = 12;
+var SKEW = 15;
+var SPEED = 0.024;
 var P_GLITCH = 0.007;
 var GLITCH_PAUSE_DURATION = [100, 200]; // min, max in ms.
-var color = [220, 0, 220];
-var title = 'Coming Soon';
+var COLOR = [220, 0, 220];
+var TITLE = 'Coming Soon';
 //hex Settings
 var hexagon_radius = 300;
 var hexagon_max_absolute_speed = 0.9;
@@ -45,11 +45,11 @@ var audio = new Audio('boop.mp3');
 function onResize() {
 	var h = state.h = window.innerHeight * 2;
 	var w = state.w = window.innerWidth * 2;
-	var y0 = state.y0 = h * (1 - horizon_Y);
+	var y0 = state.y0 = h * (1 - HORIZON_Y);
 	state.nHorizontal =
-	Math.pow(h * horizon_Y, 1 / spacing_Y);
-	state.nVertical = Math.ceil(w / spacing_x);
-	state.nScanlines = Math.ceil(h / spacingScanLines);
+	Math.pow(h * HORIZON_Y, 1 / SPACING_Y);
+	state.nVertical = Math.ceil(w / SPACING_X);
+	state.nScanlines = Math.ceil(h / SPACING_SCANLINES);
 
 	// Update the DOM.
 	ctxs.forEach(function (ctx) {
@@ -66,7 +66,18 @@ function drawStatic() {
 
 	//ctx.clearRect(0, 0, w, h);
     
-
+	// Draw vertical lines.
+    for (var n = 0; n < nVertical; ++n) {
+		ctx.beginPath();
+		var x = nVertical / 2 - n;
+		var x1 = x * SPACING_X + w / 2;
+		var x2 = x * SPACING_X * SKEW + w / 2;
+		ctx.beginPath();
+		//ctx.moveTo(x1, 0);
+		ctx.moveTo(x1, y0);
+		ctx.lineTo(x2, h);
+		stroke(ctx);
+	}
 	
 	drawStaticHex(w,h);
 	// setting up hex to draw in drawloop()
@@ -80,9 +91,9 @@ function drawStatic() {
     ctx.shadowBlur = 20;
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.fillStyle = 'rgba(' + color + ', 1)';
+	ctx.fillStyle = 'rgba(' + COLOR + ', 1)';
 	ctx.font = 'bold 64pt "Monoton", monospace';
-	ctx.strokeText(title, w / 2,(h / 2) - 500);
+	ctx.strokeText(TITLE, w / 2,(h / 2) - 500);
 
 	drawScreenArtifacts();
 }
@@ -93,14 +104,27 @@ function drawScreenArtifacts() {var
 
 	ctx.clearRect(0, 0, w, h);
 
+	// Draw scanlines.
+	var strokeOptions = {
+		c1: 'rgba(44, 74, 44, 0.16)',
+		c2: 'rgba(0, 10, 0, 0.16)' };
+
+	for (var n = 0; n < state.nScanlines; ++n) {
+		var y = n * SPACING_SCANLINES;
+		ctx.beginPath();
+		ctx.moveTo(0, y);
+		ctx.lineTo(w, y);
+		stroke(ctx, strokeOptions);
+	}
+
 	// Draw glow.
 	ctx.beginPath();
 	var glow = ctx.createRadialGradient(
 	w / 2, h / 2, Math.max(w, h),
-	w / 2, h / 2, spacing_x * 1.5);
+	w / 2, h / 2, SPACING_X * 1.5);
 
 	glow.addColorStop(0.2, 'rgba(0, 0, 0, 0.16)');
-	glow.addColorStop(1.0, 'rgba(' + color + ', 0.16)');
+	glow.addColorStop(1.0, 'rgba(' + COLOR + ', 0.16)');
 	ctx.fillStyle = glow;
 	ctx.fillRect(0, 0, w, h);
 }
@@ -113,6 +137,17 @@ function drawDynamic() {
     
     ctx.beginPath();
     drawHexagonPath();
+    
+    // Draw horizontal lines.
+    ctx.shadowColor = "rgba(0,0,0,0)";
+	for (var n = 0; n < nHorizontal; n++) {
+		var y = y0 + 2 + Math.pow(n + yOffset, SPACING_Y);
+		ctx.beginPath();
+		ctx.moveTo(0, y);
+		ctx.lineTo(w, y);
+		stroke(ctx);
+	}
+	state.yOffset = (yOffset + SPEED) % 1;
     
 }
 
@@ -265,7 +300,7 @@ function stroke(ctx)
 
 
 
-{var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},_ref2$w = _ref2.w1,w1 = _ref2$w === undefined ? 10 : _ref2$w,_ref2$w2 = _ref2.w2,w2 = _ref2$w2 === undefined ? 2 : _ref2$w2,_ref2$c = _ref2.c1,c1 = _ref2$c === undefined ? 'rgba(' + color + ', 0.5)' : _ref2$c,_ref2$c2 = _ref2.c2,c2 = _ref2$c2 === undefined ? 'rgb(' + color + ')' : _ref2$c2;
+{var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},_ref2$w = _ref2.w1,w1 = _ref2$w === undefined ? 10 : _ref2$w,_ref2$w2 = _ref2.w2,w2 = _ref2$w2 === undefined ? 2 : _ref2$w2,_ref2$c = _ref2.c1,c1 = _ref2$c === undefined ? 'rgba(' + COLOR + ', 0.5)' : _ref2$c,_ref2$c2 = _ref2.c2,c2 = _ref2$c2 === undefined ? 'rgb(' + COLOR + ')' : _ref2$c2;
 	ctx.lineWidth = w1;
 	ctx.strokeStyle = c1;
 	ctx.stroke();
