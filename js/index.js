@@ -62,11 +62,12 @@ function onResize() {
 
 function drawStatic() {
     var h = state.h,w = state.w,y0 = state.y0,nVertical = state.nVertical;
-	var ctx = staticCtx;
+    var ctx = staticCtx;
 
 	//ctx.clearRect(0, 0, w, h);
     
 	// Draw vertical lines.
+    ctx.fillRect	
     for (var n = 0; n < nVertical; ++n) {
 		ctx.beginPath();
 		var x = nVertical / 2 - n;
@@ -158,7 +159,7 @@ function drawLoop() {
 	drawDynamic();
 
 	if (Math.random() > P_GLITCH) return;
-	audio.play();
+	//audio.play();
     drawGlitch();
 
     
