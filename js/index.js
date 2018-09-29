@@ -67,7 +67,8 @@ function drawStatic() {
 	//ctx.clearRect(0, 0, w, h);
     
 	// Draw vertical lines.
-    ctx.fillRect	
+    ctx.fillStyle = 'rgba(255,0,255,0.7)';
+    ctx.fillRect = 'rgba(100,100,100,100)';	
     for (var n = 0; n < nVertical; ++n) {
 		ctx.beginPath();
 		var x = nVertical / 2 - n;
