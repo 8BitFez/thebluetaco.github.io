@@ -42,6 +42,7 @@ var state = {
 	yOffset: 0 };
 
 var audio = new Audio('boop.mp3');
+
 function onResize() {
 	var h = state.h = window.innerHeight * 2;
 	var w = state.w = window.innerWidth * 2;
@@ -83,17 +84,15 @@ function drawStatic() {
 	// setting up hex to draw in drawloop()
     placeHexagon(w / 2,h / 2,{l: 0});
     
-    // Fade the lines on the wall.
 	    
-	// Draw title.
-    
+	// Draw title.    
     ctx.shadowColor = 'rgb(0,0,0)';
     ctx.shadowBlur = 20;
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
 	ctx.fillStyle = 'rgba(' + COLOR + ', 1)';
-	ctx.font = 'bold 64pt "Monoton", monospace';
-	ctx.strokeText(TITLE, w / 2,(h / 2) - 500);
+	ctx.font = '64pt "Monoton", monospace';
+	ctx.fillText(TITLE, w / 2,(h / 2) - 500);
 
 	drawScreenArtifacts();
 }
