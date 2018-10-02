@@ -9,11 +9,11 @@ var SPACING_Y = 2.2;
 var SPACING_X = 35;
 var SPACING_SCANLINES = 12;
 var SKEW = 15;
-var SPEED = 0.024;
+var SPEED = 0.01;
 var P_GLITCH = 0.007;
 var GLITCH_PAUSE_DURATION = [100, 200]; // min, max in ms.
 var COLOR = [220, 0, 220];
-var TITLE = 'Coming Soon';
+var TITLE = '403';
 //hex Settings
 var hexagon_radius = 300;
 var hexagon_max_absolute_speed = 0.9;
@@ -27,14 +27,14 @@ var size_hex= 300;
 ░█─── ░█──░█ ░█─░█ ░█▀▀▀ 
 ░█▄▄█ ░█▄▄▄█ ░█▄▄▀ ░█▄▄▄ 
 */
-
+var rombas = [] ;
 var x_hex, y_hex;
 var img, hex, text;
 var dynamicCtx = document.createElement('canvas').getContext('2d');
 var staticCtx = document.createElement('canvas').getContext('2d');
 var screenCtx = document.createElement('canvas').getContext('2d');
 var ctxs = [dynamicCtx, staticCtx, screenCtx];
-
+var rombas_out = 0;
 // Define and hydrate the state.
 // The rest is filled onResize.
 var state = {
@@ -62,30 +62,51 @@ function onResize() {
 };
 
 function drawStatic() {
+    
     var h = state.h,w = state.w,y0 = state.y0,nVertical = state.nVertical;
 	var ctx = staticCtx;
-
-	//ctx.clearRect(0, 0, w, h);
+    
+    placeRombas();
+	
+    ctx.clearRect(0, 0, w, h);
     
 	// Draw vertical lines.
+    ctx.shadowColor = "rgba(0,0,0,0)";
     for (var n = 0; n < nVertical; ++n) {
 		ctx.beginPath();
 		var x = nVertical / 2 - n;
 		var x1 = x * SPACING_X + w / 2;
 		var x2 = x * SPACING_X * SKEW + w / 2;
 		ctx.beginPath();
-		//ctx.moveTo(x1, 0);
+		ctx.moveTo(x1, 0);
 		ctx.moveTo(x1, y0);
 		ctx.lineTo(x2, h);
 		stroke(ctx);
 	}
 	
-	drawStaticHex(w,h);
+	drawStaticHex(w,h,[100,0,100]);
 	// setting up hex to draw in drawloop()
     placeHexagon(w / 2,h / 2,{l: 0});
+    /*
+    ctx.fillStyle = 'rgba(255,0,255, 1)';
+    ctx.fillRect((w /2)- 156,(h /2)+ 20, 85, 85) ;
+	
+    ctx.fillStyle = 'rgba(100,0,100, 1)';
+    ctx.fillRect((w/2) - 151,(h /2)+ 25,75,75);
     
-	    
-	// Draw title.    
+    ctx.fillStyle = 'rgba(255,0,255, 1)';
+    ctx.fillRect((w /2)- 75,(h /2)- 55, 150,160) ;
+	
+    ctx.fillStyle = 'rgba(100,0,100, 1)';
+    ctx.fillRect((w/2) - 70,(h /2)- 50,140,150);
+    
+    ctx.fillStyle = 'rgba(255,0,255, 1)';
+    ctx.fillRect((w /2)- 76,(h /2)- 55, 85, 85) ;
+	
+    ctx.fillStyle = 'rgba(100,0,100, 1)';
+    ctx.fillRect((w/2) - 71,(h /2)- 50,75,75);
+    */
+    // Draw title.    
     ctx.shadowColor = 'rgb(0,0,0)';
     ctx.shadowBlur = 20;
 	ctx.textAlign = 'center';
@@ -102,7 +123,7 @@ function drawScreenArtifacts() {var
 	var ctx = screenCtx;
 
 	ctx.clearRect(0, 0, w, h);
-
+    
 	// Draw scanlines.
 	var strokeOptions = {
 		c1: 'rgba(44, 74, 44, 0.16)',
@@ -121,14 +142,16 @@ function drawScreenArtifacts() {var
 	var glow = ctx.createRadialGradient(
 	w / 2, h / 2, Math.max(w, h),
 	w / 2, h / 2, SPACING_X * 1.5);
-
+    placeRombas();
 	glow.addColorStop(0.2, 'rgba(0, 0, 0, 0.16)');
 	glow.addColorStop(1.0, 'rgba(' + COLOR + ', 0.16)');
 	ctx.fillStyle = glow;
 	ctx.fillRect(0, 0, w, h);
 }
 
+
 function drawDynamic() {
+
     var h = state.h,w = state.w,y0 = state.y0,nHorizontal = state.nHorizontal,yOffset = state.yOffset;
 	var ctx = dynamicCtx;
     
@@ -137,11 +160,31 @@ function drawDynamic() {
     ctx.beginPath();
     drawHexagonPath();
     
+    console.log(rombas.length);
+    
+    
+    for (var n = 0; n < rombas.length; n++){
+        var rect = rombas[n] 
+        ctx.fillStyle = ('rgba(200,0,200,1)');
+        ctx.fillRect(rect.x - 5 ,rect.y - 5,rect.h + 10 ,rect.w + 10);
+        ctx.fillStyle = ('rgba(100,0,100,1)');
+        ctx.fillRect(rect.x ,rect.y ,rect.h ,rect.w);
+        rect.x = rect.x + rect.speed;    
+        if(rect.x > w){
+            rombas.splice(n,1);
+        }
+    };
+    /*
+    ctx.fillStyle = ('rgba(200,0,200,1)');
+    ctx.fillRect(g - 5 ,f - 5,110 ,110);
+    ctx.fillStyle = ('rgba(100,0,100,1)');
+    ctx.fillRect(g ,f ,100 ,100);
+    */
     // Draw horizontal lines.
     ctx.shadowColor = "rgba(0,0,0,0)";
 	for (var n = 0; n < nHorizontal; n++) {
 		var y = y0 + 2 + Math.pow(n + yOffset, SPACING_Y);
-		ctx.beginPath();
+        ctx.beginPath();
 		ctx.moveTo(0, y);
 		ctx.lineTo(w, y);
 		stroke(ctx);
@@ -157,7 +200,7 @@ function drawLoop() {
 	drawDynamic();
 
 	if (Math.random() > P_GLITCH) return;
-	audio.play();
+	//audio.play();
     drawGlitch();
 
     
@@ -165,20 +208,41 @@ function drawLoop() {
 
 
 //Draw Hexagons
-function drawStaticHex(w,h){
+function drawStaticHex(w,h,color){
     var ctx = staticCtx;
+    var rotate = 0.5;
     ctx.beginPath();
     x_hex = (w / 2)
     y_hex = (h / 2)
-    ctx.moveTo(x_hex + size_hex * Math.cos(0), y_hex + size_hex * Math.sin(0));
+    hex_radius = 100;
+    ctx.moveTo(
+        x_hex + Math.cos( Math.PI / 3 * (side_hex + rotate)  ) * hex_radius + Math.cos( Math.PI / 3 * (side_hex + (2 + rotate)) ) * hex_radius,
+		y_hex + Math.sin( Math.PI / 3 * (side_hex + rotate) ) * hex_radius +  Math.sin( Math.PI / 3 * (side_hex + (2 + rotate)) ) * hex_radius 
+    );
     for (side_hex; side_hex < 7; side_hex++) {
-        ctx.lineTo(x_hex + size_hex * Math.cos(side_hex * 2 * Math.PI / 6), y_hex + size_hex * Math.sin(side_hex * 2 * Math.PI / 6));
+        ctx.lineTo(
+        x_hex + Math.cos( Math.PI / 3 * ( side_hex + (1 + rotate) )) * hexagon_radius,
+		y_hex + Math.sin( Math.PI / 3 * ( side_hex + (1 + rotate) )) * hexagon_radius
+                  );
     };
     side_hex = 0
     ctx.shadowColor = "rgba(0,0,0,0)";
-    ctx.fillStyle ="rgba(105,0,66,1)";
+    ctx.fillStyle ='rgba('+color+',1)';
     ctx.fill();
     stroke(ctx);
+}
+// creates new rombas object to look cool
+function placeRombas() {
+    
+    console.log("place rombas")
+    var ctx = staticCtx;
+	var h = Math.floor(Math.random() * 500),
+		w = Math.floor(Math.random() * 600),
+        x = h - (h*2),
+        y = Math.random() * 700,
+        p = Math.random() * 10;
+	var rect = ({x: x,y: y,w: w,h: h,speed:p});
+    rombas.push(rect);
 }
 
 function placeHexagon(x, y, opts) {
@@ -197,37 +261,38 @@ function placeHexagon(x, y, opts) {
 }
 
 function drawHexagonPath() {
+    var rotate = 0.5
 	var ctx = dynamicCtx;
     ctx.moveTo(
-		hex.x + Math.cos( Math.PI / 3 * hex.sl ) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + 2) ) * hexagon_radius * hex.p,
-		hex.y + Math.sin( Math.PI / 3 * hex.sl ) * hexagon_radius +  Math.sin( Math.PI / 3 * (hex.sl + 2) ) * hexagon_radius * hex.p
+		hex.x + Math.cos( Math.PI / 3 * (hex.sl + rotate)  ) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + (2 + rotate)) ) * hexagon_radius * hex.p,
+		hex.y + Math.sin( Math.PI / 3 * (hex.sl + rotate) ) * hexagon_radius +  Math.sin( Math.PI / 3 * (hex.sl + (2 + rotate)) ) * hexagon_radius * hex.p
 	);
 	
 	//ctx.moveTo(hex.x, hex.y);
 	
 	ctx.lineTo(
-		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius,
-		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius
-	);
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + (1 + rotate) )) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + (1 + rotate) )) * hexagon_radius
+    );
     
     ctx.lineTo(
-		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius,
-		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 1 ) ) * hexagon_radius
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + (1 + rotate) )) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + (1 + rotate) )) * hexagon_radius
 	);
 	
 	ctx.lineTo(
-		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 2 ) ) * hexagon_radius,
-		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 2 ) ) * hexagon_radius
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + (2 + rotate) ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + (2 + rotate) ) )* hexagon_radius
 	);
 	
 	ctx.lineTo(
-		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius,
-		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + (3 + rotate) ) ) * hexagon_radius,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + (3 + rotate) ) ) * hexagon_radius
 	);
 	
 	ctx.lineTo(
-		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + 5) ) * hexagon_radius * hex.p,
-		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + 3 ) ) * hexagon_radius + Math.sin( Math.PI / 3 * (hex.sl + 5) ) * hexagon_radius * hex.p
+		hex.x + Math.cos( Math.PI / 3 * ( hex.sl + (3 + rotate ) )) * hexagon_radius + Math.cos( Math.PI / 3 * (hex.sl + (5+ rotate) )) * hexagon_radius * hex.p,
+		hex.y + Math.sin( Math.PI / 3 * ( hex.sl + (3 + rotate ) )) * hexagon_radius + Math.sin( Math.PI / 3 * (hex.sl + (5+ rotate) )) * hexagon_radius * hex.p
 	);
 	
 	hex.p += hex.speed;
