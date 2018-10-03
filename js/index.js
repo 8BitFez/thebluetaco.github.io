@@ -11,7 +11,7 @@ var SPACING_SCANLINES = 12;
 var SKEW = 15;
 var SPEED = 0.01;
 var P_GLITCH = 0.007;
-var GLITCH_PAUSE_DURATION = [100, 200]; // min, max in ms.
+var GLITCH_PAUSE_DURATION = [100, 300]; // min, max in ms.
 var COLOR = [220, 0, 220];
 var TITLE = '403';
 //hex Settings
@@ -160,7 +160,7 @@ function drawDynamic() {
     ctx.beginPath();
     drawHexagonPath();
     
-    console.log(rombas.length);
+    //console.log(rombas.length);
     
     
     for (var n = 0; n < rombas.length; n++){
@@ -234,7 +234,7 @@ function drawStaticHex(w,h,color){
 // creates new rombas object to look cool
 function placeRombas() {
     
-    console.log("place rombas")
+    //console.log("place rombas")
     var ctx = staticCtx;
 	var h = Math.floor(Math.random() * 500),
 		w = Math.floor(Math.random() * 600),
@@ -310,6 +310,7 @@ function drawHexagonPath() {
     ctx.stroke();
 
 }
+
 function drawGlitch() {var
 	w = state.w,h = state.h;
 
